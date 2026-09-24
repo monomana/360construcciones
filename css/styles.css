@@ -219,17 +219,20 @@ body {
 
 .cards {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
   gap: 28px;
 }
 
 .card {
   background: #fff;
   border-radius: 12px;
-  padding: 40px 28px;
+  padding: 36px 24px;
   text-align: center;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
   transition: transform 0.25s, box-shadow 0.25s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .card:hover {
@@ -238,8 +241,26 @@ body {
 }
 
 .card-icon {
-  font-size: 3rem;
-  margin-bottom: 16px;
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 60%, #0f3460 100%);
+  color: #d4a017;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 18px;
+  box-shadow: 0 6px 16px rgba(15, 52, 96, 0.25);
+  transition: transform 0.25s;
+}
+
+.card:hover .card-icon {
+  transform: scale(1.08);
+}
+
+.card-icon svg {
+  width: 34px;
+  height: 34px;
 }
 
 .card h3 {
