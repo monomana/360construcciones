@@ -38,16 +38,13 @@ body {
   height: 68px;
 }
 
-.logo {
-  font-size: 1.5rem;
-  font-weight: 800;
-  text-decoration: none;
-  color: #1a1a2e;
-}
-
-.logo span {
-  font-weight: 400;
-  color: #666;
+.logo img {
+  height: 44px;
+  width: auto;
+  display: block;
+  background: #fff;
+  padding: 5px;
+  border-radius: 8px;
 }
 
 .nav-links {
@@ -246,17 +243,12 @@ body {
   margin-right: 10px;
 }
 
-.image-placeholder {
-  background: linear-gradient(135deg, #1a1a2e, #0f3460);
+.nosotros-img {
+  width: 100%;
+  max-width: 420px;
   border-radius: 16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 360px;
-  font-size: 5rem;
-  font-weight: 800;
-  color: rgba(255, 255, 255, 0.15);
-  letter-spacing: 8px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+  display: block;
 }
 
 /* Contacto */
@@ -313,12 +305,9 @@ body {
   padding-bottom: 40px;
 }
 
-.footer .logo {
-  color: #fff;
-}
-
-.footer .logo span {
-  color: #999;
+.footer .logo img {
+  height: 60px;
+  padding: 6px;
 }
 
 .footer-brand p {
