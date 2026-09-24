@@ -99,6 +99,17 @@ body {
   color: #d4a017;
 }
 
+.nav-instagram {
+  display: flex;
+  align-items: center;
+  color: #1a1a2e;
+  transition: color 0.2s;
+}
+
+.nav-instagram:hover {
+  color: #d4a017;
+}
+
 .nav-toggle {
   display: none;
   flex-direction: column;
@@ -285,6 +296,151 @@ body {
   display: block;
 }
 
+/* Galería */
+.galeria {
+  background: #fff;
+}
+
+.galeria-filtros {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 40px;
+}
+
+.galeria-filtro {
+  background: #f1f3f5;
+  border: 1.5px solid transparent;
+  border-radius: 999px;
+  padding: 8px 18px;
+  font-family: inherit;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #444;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.galeria-filtro:hover {
+  border-color: #d4a017;
+  color: #1a1a2e;
+}
+
+.galeria-filtro.activo {
+  background: #1a1a2e;
+  color: #fff;
+}
+
+.galeria-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 16px;
+}
+
+.galeria-grid article {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+  transition: transform 0.25s, box-shadow 0.25s;
+}
+
+.galeria-grid article:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
+}
+
+.galeria-grid img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  aspect-ratio: 4 / 3;
+  cursor: pointer;
+  background: #e9ecef;
+}
+
+/* Lightbox */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.92);
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.25s;
+}
+
+.lightbox.abierto {
+  opacity: 1;
+  visibility: visible;
+}
+
+.lightbox img {
+  max-width: 92vw;
+  max-height: 85vh;
+  border-radius: 8px;
+  box-shadow: 0 12px 48px rgba(0, 0, 0, 0.5);
+}
+
+.lightbox-cerrar {
+  position: absolute;
+  top: 18px;
+  right: 24px;
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 2.4rem;
+  line-height: 1;
+  cursor: pointer;
+  z-index: 2001;
+}
+
+.lightbox-flecha {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.12);
+  border: none;
+  color: #fff;
+  font-size: 2.8rem;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+  z-index: 2001;
+}
+
+.lightbox-flecha:hover {
+  background: rgba(212, 160, 23, 0.85);
+}
+
+.lightbox-anterior {
+  left: 20px;
+}
+
+.lightbox-siguiente {
+  right: 20px;
+}
+
+.lightbox-caption {
+  position: absolute;
+  bottom: 20px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  color: #ccc;
+  font-size: 0.9rem;
+}
+
 /* Contacto */
 .contacto {
   background: #f8f9fa;
@@ -354,6 +510,33 @@ body {
   font-size: 0.95rem;
 }
 
+.social-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #ccc;
+  text-decoration: none;
+  margin-top: 14px;
+  padding: 10px 16px;
+  border: 1px solid #333;
+  border-radius: 8px;
+  transition: all 0.2s;
+}
+
+.social-link:hover {
+  color: #d4a017;
+  border-color: #d4a017;
+}
+
+.footer-contact a.footer-instagram {
+  color: #d4a017;
+  text-decoration: none;
+}
+
+.footer-contact a.footer-instagram:hover {
+  text-decoration: underline;
+}
+
 .footer-bottom {
   border-top: 1px solid #333;
   text-align: center;
@@ -380,8 +563,31 @@ body {
     display: flex;
   }
 
+  .nav-instagram {
+    margin-left: auto;
+    margin-right: 16px;
+  }
+
   .nav-toggle {
     display: flex;
+  }
+
+  .galeria-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .lightbox-flecha {
+    font-size: 2rem;
+    width: 44px;
+    height: 44px;
+  }
+
+  .lightbox-anterior {
+    left: 8px;
+  }
+
+  .lightbox-siguiente {
+    right: 8px;
   }
 
   .nosotros-grid {
@@ -412,5 +618,15 @@ body {
 
   .logo-tagline {
     font-size: 0.6rem;
+  }
+}
+
+@media (max-width: 420px) {
+  .galeria-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .logo-tagline {
+    display: none;
   }
 }
