@@ -38,13 +38,29 @@ body {
   height: 68px;
 }
 
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+}
+
 .logo img {
   height: 44px;
   width: auto;
   display: block;
-  background: #fff;
-  padding: 5px;
-  border-radius: 8px;
+}
+
+.logo-text {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: #1a1a2e;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.logo-text strong {
+  font-weight: 800;
 }
 
 .nav-links {
@@ -366,5 +382,9 @@ body {
 
   .section {
     padding: 64px 0;
+  }
+
+  .logo-text {
+    font-size: 0.95rem;
   }
 }
