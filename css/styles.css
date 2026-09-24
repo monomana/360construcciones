@@ -359,6 +359,17 @@ body {
   gap: 16px;
 }
 
+.galeria-aviso {
+  grid-column: 1 / -1;
+  text-align: center;
+  color: #888;
+  font-size: 1.05rem;
+  padding: 64px 24px;
+  background: #f8f9fa;
+  border: 2px dashed #ddd;
+  border-radius: 12px;
+}
+
 .galeria-grid article {
   position: relative;
   border-radius: 12px;

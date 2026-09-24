@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const lightboxCaption = document.getElementById('lightboxCaption');
 
   let proyectos = [];
-  let filtroActivo = 'todos';
+  let filtroActivo = null; // null = sin selección, el usuario elige un proyecto
   let fotosActuales = [];
   let fotoActual = 0;
 
@@ -49,7 +49,8 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   function renderFiltros() {
-    const btns = [{ id: 'todos', nombre: 'Todos' }, ...proyectos];
+    // Proyectos primero y "Todos" al final
+    const btns = [...proyectos, { id: 'todos', nombre: 'Todos' }];
     filtrosCont.innerHTML = '';
     btns.forEach(p => {
       const b = document.createElement('button');
@@ -67,9 +68,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function renderGrid() {
     grid.innerHTML = '';
-    fotosActuales = filtroActivo === 'todos'
-      ? proyectos.flatMap(p => p.fotos.map(f => ({ ...f, proyecto: p.nombre })))
-      : proyectos.find(p => p.id === filtroActivo).fotos;
+
+    if (!filtroActivo) {
+      const aviso = document.createElement('p');
+      aviso.className = 'galeria-aviso';
+      aviso.textContent = 'Seleccioná un proyecto para ver sus fotos.';
+      grid.appendChild(aviso);
+      fotosActuales = [];
+      return;
+    }
+
+    if (filtroActivo === 'todos') {
+      fotosActuales = proyectos.flatMap(p => p.fotos.map(f => ({ ...f, proyecto: p.nombre })));
+    } else {
+      const proy = proyectos.find(p => p.id === filtroActivo);
+      fotosActuales = proy.fotos.map(f => ({ ...f, proyecto: proy.nombre }));
+    }
 
     fotosActuales.forEach((foto, idx) => {
       const art = document.createElement('article');
