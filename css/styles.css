@@ -35,7 +35,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 68px;
+  height: 76px;
 }
 
 .logo {
@@ -52,15 +52,33 @@ body {
 }
 
 .logo-text {
-  font-size: 1.15rem;
-  font-weight: 600;
-  color: #1a1a2e;
-  line-height: 1.2;
+  display: flex;
+  flex-direction: column;
+  line-height: 1.15;
   white-space: nowrap;
 }
 
-.logo-text strong {
-  font-weight: 800;
+.logo-name {
+  font-family: 'Oswald', sans-serif;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1a1a2e;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.logo-name strong {
+  font-weight: 700;
+  color: #d4a017;
+}
+
+.logo-tagline {
+  font-family: 'Oswald', sans-serif;
+  font-size: 0.68rem;
+  font-weight: 400;
+  color: #666;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
 }
 
 .nav-links {
@@ -348,7 +366,7 @@ body {
   .nav-links {
     display: none;
     position: absolute;
-    top: 68px;
+    top: 76px;
     left: 0;
     width: 100%;
     background: #fff;
@@ -386,5 +404,13 @@ body {
 
   .logo-text {
     font-size: 0.95rem;
+  }
+
+  .logo-name {
+    font-size: 1rem;
+  }
+
+  .logo-tagline {
+    font-size: 0.6rem;
   }
 }
