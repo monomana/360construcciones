@@ -30,13 +30,15 @@ document.addEventListener('DOMContentLoaded', () => {
   /* ===================== Galería ===================== */
 
   const filtrosCont = document.getElementById('galeriaFiltros');
-  const grid = document.getElementById('galeriaGrid');
+  const track = document.getElementById('galeriaTrack');
+  const carAnterior = document.getElementById('carAnterior');
+  const carSiguiente = document.getElementById('carSiguiente');
   const lightbox = document.getElementById('lightbox');
   const lightboxImg = document.getElementById('lightboxImg');
   const lightboxCaption = document.getElementById('lightboxCaption');
 
   let proyectos = [];
-  let filtroActivo = null; // null = sin selección, el usuario elige un proyecto
+  let filtroActivo = null; // null = carrusel general (una foto por proyecto)
   let fotosActuales = [];
   let fotoActual = 0;
 
@@ -58,44 +60,91 @@ document.addEventListener('DOMContentLoaded', () => {
       b.textContent = p.nombre;
       b.dataset.id = p.id;
       b.addEventListener('click', () => {
-        filtroActivo = p.id;
-        renderGrid();
+        // Clic en el proyecto activo → vuelve a la vista general (una foto por proyecto)
+        filtroActivo = (filtroActivo === p.id) ? null : p.id;
+        renderCarrusel();
         renderFiltros();
       });
       filtrosCont.appendChild(b);
     });
   }
 
-  function renderGrid() {
-    grid.innerHTML = '';
-
-    if (!filtroActivo) {
-      const aviso = document.createElement('p');
-      aviso.className = 'galeria-aviso';
-      aviso.textContent = 'Seleccioná un proyecto para ver sus fotos.';
-      grid.appendChild(aviso);
-      fotosActuales = [];
-      return;
+  // Construye el conjunto de slides según el filtro:
+  // - null: una foto por proyecto, con el nombre como título
+  // - 'todos': todas las fotos de todos los proyectos
+  // - proyecto: todas las fotos del proyecto seleccionado
+  function construirSlides() {
+    if (filtroActivo === null) {
+      return proyectos.map(p => ({
+        ...p.fotos[0],
+        proyecto: p.nombre,
+        titulo: p.nombre,
+        esProyecto: true,
+        idProyecto: p.id
+      }));
     }
-
     if (filtroActivo === 'todos') {
-      fotosActuales = proyectos.flatMap(p => p.fotos.map(f => ({ ...f, proyecto: p.nombre })));
-    } else {
-      const proy = proyectos.find(p => p.id === filtroActivo);
-      fotosActuales = proy.fotos.map(f => ({ ...f, proyecto: proy.nombre }));
+      return proyectos.flatMap(p => p.fotos.map(f => ({
+        ...f,
+        proyecto: p.nombre,
+        titulo: p.nombre + ' · ' + (f.alt.split(' - foto ')[1] || '')
+      })));
     }
+    const proy = proyectos.find(p => p.id === filtroActivo);
+    return proy.fotos.map(f => ({
+      ...f,
+      proyecto: proy.nombre,
+      titulo: proy.nombre + ' · ' + (f.alt.split(' - foto ')[1] || '')
+    }));
+  }
+
+  function renderCarrusel() {
+    fotosActuales = construirSlides();
+    track.innerHTML = '';
 
     fotosActuales.forEach((foto, idx) => {
-      const art = document.createElement('article');
+      const slide = document.createElement('div');
+      slide.className = 'galeria-slide';
+      slide.title = foto.titulo;
+
       const img = document.createElement('img');
       img.src = foto.thumb;
       img.alt = foto.alt;
       img.loading = 'lazy';
-      img.addEventListener('click', () => abrirLightbox(idx));
-      art.appendChild(img);
-      grid.appendChild(art);
+      slide.appendChild(img);
+
+      const cap = document.createElement('div');
+      cap.className = 'galeria-caption';
+      // En la vista general (null) mostramos el nombre del proyecto,
+      // en el resto mostramos nombre + número de foto
+      cap.textContent = foto.esProyecto ? foto.proyecto : foto.titulo;
+      slide.appendChild(cap);
+
+      // Click en la foto general → entra al proyecto; si no → lightbox
+      slide.addEventListener('click', () => {
+        if (foto.esProyecto) {
+          filtroActivo = foto.idProyecto;
+          renderCarrusel();
+          renderFiltros();
+        } else {
+          abrirLightbox(idx);
+        }
+      });
+
+      track.appendChild(slide);
     });
+    fotoActual = 0;
   }
+
+  function moverCarrusel(delta) {
+    if (!fotosActuales.length) return;
+    fotoActual = (fotoActual + delta + fotosActuales.length) % fotosActuales.length;
+    const slide = track.children[fotoActual];
+    if (slide) slide.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+  }
+
+  carAnterior.addEventListener('click', () => moverCarrusel(-1));
+  carSiguiente.addEventListener('click', () => moverCarrusel(1));
 
   function abrirLightbox(idx) {
     fotoActual = idx;
@@ -118,14 +167,14 @@ document.addEventListener('DOMContentLoaded', () => {
     lightboxCaption.textContent = foto.proyecto + ' · ' + (fotoActual + 1) + ' / ' + fotosActuales.length;
   }
 
-  function mover(delta) {
+  function moverLightbox(delta) {
     fotoActual = (fotoActual + delta + fotosActuales.length) % fotosActuales.length;
     actualizarLightbox();
   }
 
   document.getElementById('lightboxCerrar').addEventListener('click', cerrarLightbox);
-  document.getElementById('lightboxAnterior').addEventListener('click', () => mover(-1));
-  document.getElementById('lightboxSiguiente').addEventListener('click', () => mover(1));
+  document.getElementById('lightboxAnterior').addEventListener('click', () => moverLightbox(-1));
+  document.getElementById('lightboxSiguiente').addEventListener('click', () => moverLightbox(1));
 
   lightbox.addEventListener('click', e => {
     if (e.target === lightbox) cerrarLightbox();
@@ -134,8 +183,8 @@ document.addEventListener('DOMContentLoaded', () => {
   document.addEventListener('keydown', e => {
     if (!lightbox.classList.contains('abierto')) return;
     if (e.key === 'Escape') cerrarLightbox();
-    if (e.key === 'ArrowLeft') mover(-1);
-    if (e.key === 'ArrowRight') mover(1);
+    if (e.key === 'ArrowLeft') moverLightbox(-1);
+    if (e.key === 'ArrowRight') moverLightbox(1);
   });
 
   fetch('galeria-data.json')
@@ -143,11 +192,11 @@ document.addEventListener('DOMContentLoaded', () => {
     .then(data => {
       proyectos = data;
       renderFiltros();
-      renderGrid();
+      renderCarrusel();
     })
     .catch(err => {
       console.error('No se pudo cargar la galería:', err);
-      grid.innerHTML = '<p>No se pudo cargar la galería.</p>';
+      track.innerHTML = '<p>No se pudo cargar la galería.</p>';
     });
 
 });
