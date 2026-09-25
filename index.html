@@ -110,13 +110,8 @@
   <section id="galeria" class="section galeria">
     <div class="container">
       <h2 class="section-title">Galería de Proyectos</h2>
-      <p class="section-subtitle">Seleccioná un proyecto o tocá una foto para ver los trabajos completos</p>
-      <div class="galeria-filtros" id="galeriaFiltros"></div>
-      <div class="galeria-carrusel" id="galeriaCarrusel">
-        <button class="galeria-flecha galeria-anterior" id="carAnterior" aria-label="Anterior">‹</button>
-        <div class="galeria-track" id="galeriaTrack"></div>
-        <button class="galeria-flecha galeria-siguiente" id="carSiguiente" aria-label="Siguiente">›</button>
-      </div>
+      <p class="section-subtitle">Tocá una tarjeta para ver las fotos de cada proyecto</p>
+      <div class="galeria-grid" id="galeriaGrid"></div>
     </div>
   </section>
 
@@ -161,6 +156,7 @@
 
   <div class="lightbox" id="lightbox" aria-hidden="true">
     <button class="lightbox-cerrar" id="lightboxCerrar" aria-label="Cerrar">×</button>
+    <div class="lightbox-titulo" id="lightboxTitulo"></div>
     <button class="lightbox-flecha lightbox-anterior" id="lightboxAnterior" aria-label="Anterior">‹</button>
     <img src="" alt="" id="lightboxImg">
     <button class="lightbox-flecha lightbox-siguiente" id="lightboxSiguiente" aria-label="Siguiente">›</button>
