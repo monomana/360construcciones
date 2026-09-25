@@ -727,6 +727,35 @@ body {
   }
 }
 
+/* Navbar compacto en teléfonos: el logo + teléfono + Instagram + hamburguesa
+   deben entrar en pantallas chicas o el botón de menú queda fuera de pantalla */
+@media (max-width: 480px) {
+  .nav-container {
+    padding: 0 16px;
+  }
+
+  .logo img {
+    height: 30px;
+  }
+
+  .logo-name {
+    font-size: 0.8rem;
+  }
+
+  .nav-fono {
+    display: none;
+  }
+
+  .nav-instagram {
+    margin-left: 10px;
+    margin-right: 8px;
+  }
+
+  .nav-toggle {
+    flex-shrink: 0;
+  }
+}
+
 @media (max-width: 420px) {
   .galeria-grid {
     grid-template-columns: 1fr;
