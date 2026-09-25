@@ -14,17 +14,34 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   const form = document.getElementById('contactForm');
-  form.addEventListener('submit', e => {
+  form.addEventListener('submit', async e => {
     e.preventDefault();
     const btn = form.querySelector('.btn');
     const original = btn.textContent;
-    btn.textContent = 'Mensaje enviado ✓';
-    btn.style.background = '#22c55e';
-    setTimeout(() => {
-      btn.textContent = original;
-      btn.style.background = '';
+    const payload = Object.fromEntries(new FormData(form).entries());
+    btn.disabled = true;
+    btn.textContent = 'Enviando...';
+    try {
+      const res = await fetch('https://formsubmit.co/ajax/623construcciones@gmail.com', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      if (!res.ok) throw new Error('FormSubmit devolvió ' + res.status);
+      btn.textContent = 'Mensaje enviado ✓';
+      btn.style.background = '#22c55e';
       form.reset();
-    }, 3000);
+    } catch (err) {
+      console.error('Error enviando el formulario:', err);
+      btn.textContent = 'Error al enviar — intentá de nuevo';
+      btn.style.background = '#dc2626';
+    } finally {
+      btn.disabled = false;
+      setTimeout(() => {
+        btn.textContent = original;
+        btn.style.background = '';
+      }, 3000);
+    }
   });
 
   /* ===================== Galería ===================== */

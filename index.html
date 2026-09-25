@@ -121,11 +121,13 @@
       <p class="section-subtitle">Dejanos tu consulta y te respondemos a la brevedad</p>
       <form class="contact-form" id="contactForm">
         <div class="form-row">
-          <input type="text" placeholder="Nombre" required>
-          <input type="email" placeholder="Email" required>
+          <input type="text" name="name" placeholder="Nombre" required>
+          <input type="email" name="email" placeholder="Email" required>
         </div>
-        <input type="text" placeholder="Teléfono">
-        <textarea rows="5" placeholder="Contanos qué necesitas..." required></textarea>
+        <input type="text" name="telefono" placeholder="Teléfono">
+        <textarea name="message" rows="5" placeholder="Contanos qué necesitas..." required></textarea>
+        <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
+        <input type="hidden" name="_captcha" value="false">
         <button type="submit" class="btn">Enviar Mensaje</button>
       </form>
     </div>
