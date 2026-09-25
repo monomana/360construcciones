@@ -110,6 +110,17 @@ body {
   color: #d4a017;
 }
 
+.nav-fono {
+  display: flex;
+  align-items: center;
+  color: #1a1a2e;
+  transition: color 0.2s;
+}
+
+.nav-fono:hover {
+  color: #d4a017;
+}
+
 .nav-toggle {
   display: none;
   flex-direction: column;
@@ -489,6 +500,34 @@ body {
   font-size: 0.9rem;
 }
 
+/* WhatsApp flotante */
+.whatsapp-float {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: #25d366;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 16px rgba(37, 211, 102, 0.5);
+  z-index: 1500;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.whatsapp-float:hover {
+  transform: scale(1.08);
+  box-shadow: 0 6px 24px rgba(37, 211, 102, 0.65);
+}
+
+.whatsapp-float svg {
+  width: 30px;
+  height: 30px;
+  fill: #fff;
+}
+
 /* Contacto */
 .contacto {
   background: #f8f9fa;
@@ -585,6 +624,21 @@ body {
   text-decoration: underline;
 }
 
+.footer-contact a.tel-link,
+.footer-contact a[href^="tel:"],
+.footer-contact a[href^="mailto:"] {
+  color: #fff;
+  text-decoration: none;
+  border-bottom: 1px solid #444;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.footer-contact a[href^="tel:"]:hover,
+.footer-contact a[href^="mailto:"]:hover {
+  color: #d4a017;
+  border-color: #d4a017;
+}
+
 .footer-bottom {
   border-top: 1px solid #333;
   text-align: center;
@@ -611,8 +665,12 @@ body {
     display: flex;
   }
 
-  .nav-instagram {
+  .nav-fono {
     margin-left: auto;
+  }
+
+  .nav-instagram {
+    margin-left: 16px;
     margin-right: 16px;
   }
 
