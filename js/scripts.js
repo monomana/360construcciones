@@ -13,6 +13,24 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+  // Tema claro/oscuro con memoria
+  const themeToggle = document.getElementById('themeToggle');
+  if (themeToggle) {
+    themeToggle.addEventListener('click', () => {
+      const html = document.documentElement;
+      const actual = html.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+      const nuevo = actual === 'dark' ? 'light' : 'dark';
+      html.setAttribute('data-theme', nuevo);
+      try {
+        localStorage.setItem('tema', nuevo);
+      } catch (e) {}
+      // Sincroniza el color de la barra del navegador (Chrome/Android)
+      document.querySelectorAll('meta[name="theme-color"]').forEach(m => {
+        m.content = nuevo === 'dark' ? '#0d0d1a' : '#1a1a2e';
+      });
+    });
+  }
+
   const form = document.getElementById('contactForm');
   form.addEventListener('submit', async e => {
     e.preventDefault();
